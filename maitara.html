@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maitara - Sewa & Jual Alat Camping Outdoor Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #2d5a27; --primary-dark: #1a3a15; --primary-light: #4a7a3f; --accent: #e67e22; --accent-hover: #d35400;
+            --gold: #f39c12; --text-dark: #2c3e50; --text-light: #5d6d7e; --bg-light: #f8f9f5; --bg-cream: #fef9e7;
+            --white: #ffffff; --black: #111111; --gray-100: #f7f7f7; --gray-200: #e9ecef; --gray-300: #dee2e6; --gray-700: #495057;
+            --whatsapp: #25D366; --whatsapp-dark: #128C7E; --shadow-sm: 0 2px 8px rgba(0,0,0,0.08); --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.16); --shadow-xl: 0 20px 60px rgba(0,0,0,0.2); --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px; --radius-xl: 28px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text-dark); line-height: 1.6; overflow-x: hidden; background: var(--white); }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; background: #111111; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); transition: var(--transition); }
+        .navbar.scrolled { background: #0a0a0a; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .navbar-container { max-width: 1300px; margin: 0 auto; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; height: 75px; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 800; font-size: 1.6rem; color: #ffffff; letter-spacing: -0.5px; }
+        .logo i { color: var(--accent); font-size: 1.9rem; filter: drop-shadow(0 2px 8px rgba(230, 126, 34, 0.5)); }
+        .nav-menu { display: flex; list-style: none; gap: 5px; align-items: center; }
+        .nav-menu a { text-decoration: none; color: #cccccc; font-weight: 500; padding: 10px 16px; border-radius: 50px; transition: var(--transition); font-size: 0.9rem; white-space: nowrap; position: relative; }
+        .nav-menu a:hover, .nav-menu a.active { color: #ffffff; background: rgba(255,255,255,0.1); }
+        .nav-menu a.active::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; background: var(--accent); border-radius: 10px; }
+        .nav-cta { background: var(--accent) !important; color: white !important; padding: 10px 22px !important; font-weight: 600 !important; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4); }
+        .nav-cta:hover { background: var(--accent-hover) !important; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(230, 126, 34, 0.6); color: white !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; border-radius: 10px; transition: var(--transition); }
+        .hamburger span { width: 25px; height: 2.5px; background: #ffffff; border-radius: 5px; transition: var(--transition); }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; z-index: 999; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; }
+        .whatsapp-float .wa-tooltip { background: white; color: #333; padding: 10px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transform: translateY(10px); transition: var(--transition); white-space: nowrap; }
+        .whatsapp-float:hover .wa-tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+        .whatsapp-float .wa-button { width: 60px; height: 60px; background: var(--whatsapp); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; text-decoration: none; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); transition: var(--transition); animation: pulse 2s infinite; }
+        .whatsapp-float .wa-button:hover { background: var(--whatsapp-dark); transform: scale(1.1); animation: none; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        .page-container { margin-top: 75px; }
+        .page { display: none; min-height: calc(100vh - 75px); }
+        .page.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        section { padding: 70px 30px; }
+        .section-container { max-width: 1300px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-badge { display: inline-block; background: rgba(45, 90, 39, 0.08); color: var(--primary); padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 0.85rem; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .section-title { font-size: 2.4rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 10px; letter-spacing: -0.5px; }
+        .section-subtitle { color: var(--text-light); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+        .kategori-filter { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 40px; }
+        .kategori-btn { padding: 12px 24px; border-radius: 50px; border: 2px solid var(--gray-300); background: white; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition); color: var(--text-dark); }
+        .kategori-btn:hover, .kategori-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .kategori-btn i { margin-right: 6px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .service-card { background: white; border-radius: var(--radius-lg); padding: 35px 30px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); transition: var(--transition); text-align: center; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0; transition: var(--transition); }
+        .service-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: transparent; }
+        .service-card:hover::before { opacity: 1; }
+        .service-icon { width: 75px; height: 75px; background: linear-gradient(135deg, rgba(45,90,39,0.1), rgba(230,126,34,0.1)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; color: var(--primary); }
+        .service-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--primary-dark); }
+        .service-card p { color: var(--text-light); font-size: 0.9rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: var(--transition); font-size: 0.95rem; border: none; cursor: pointer; }
+        .btn-sewa { background: #2196F3; color: white; box-shadow: 0 8px 25px rgba(33,150,243,0.3); }
+        .btn-sewa:hover { background: #1976D2; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(33,150,243,0.4); }
+        .btn-jual { background: #4CAF50; color: white; box-shadow: 0 8px 25px rgba(76,175,80,0.3); }
+        .btn-jual:hover { background: #388E3C; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(76,175,80,0.4); }
+        .btn-shopee { background: #FF9800; color: white; box-shadow: 0 8px 25px rgba(255,152,0,0.3); }
+        .btn-shopee:hover { background: #F57C00; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255,152,0,0.4); }
+        .btn-wa { background: #25D366; color: white; box-shadow: 0 8px 25px rgba(37,211,102,0.3); }
+        .btn-wa:hover { background: #128C7E; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(37,211,102,0.4); }
+        .hero-content h1 { font-size: 3.4rem; font-weight: 800; line-height: 1.2; color: var(--primary-dark); margin-bottom: 20px; letter-spacing: -1px; }
+        .hero-content h1 span { color: var(--accent); display: inline-block; position: relative; }
+        .hero-content p { font-size: 1.15rem; color: var(--text-light); margin-bottom: 5px; max-width: 500px; }
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 25px; }
+        .hero-stats { display: flex; gap: 30px; margin-top: 35px; flex-wrap: wrap; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: var(--primary-dark); }
+        .stat-label { font-size: 0.85rem; color: var(--text-light); }
+        .hero-image { position: relative; display: flex; justify-content: center; }
+        .hero-image-card { background: white; border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow-xl); transform: rotate(2deg); transition: var(--transition); }
+        .hero-image-card:hover { transform: rotate(0deg); }
+        .hero-img { width: 400px; height: auto; border-radius: var(--radius-lg); display: block; }
+        .dashboard-hero { background: linear-gradient(160deg, #f8f9f5 0%, #e8f0e3 30%, #fef9e7 70%, #fdf2e9 100%); display: flex; align-items: center; min-height: 85vh; position: relative; overflow: hidden; }
+        .dashboard-hero::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(45,90,39,0.05) 0%, transparent 70%); border-radius: 50%; top: -200px; right: -100px; }
+        .hero-container { max-width: 1300px; margin: 0 auto; padding: 40px 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; width: 100%; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        .catalog-card { background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); transition: var(--transition); cursor: pointer; }
+        .catalog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .catalog-card-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; position: relative; overflow: hidden; }
+        .catalog-card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .catalog-card-badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: white; padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; z-index: 1; }
+        .catalog-card-badge.green { background: #2d5a27; }
+        .catalog-card-body { padding: 22px; }
+        .catalog-card-body h4 { font-size: 1.1rem; margin-bottom: 5px; color: var(--primary-dark); }
+        .catalog-card-body .desc { color: var(--text-light); font-size: 0.85rem; margin-bottom: 10px; }
+        .catalog-price { font-weight: 700; color: var(--accent); font-size: 1.3rem; }
+        .catalog-price small { font-weight: 400; font-size: 0.8rem; color: var(--text-light); }
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: var(--radius-xl); max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.3s ease; }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10; transition: var(--transition); }
+        .modal-close:hover { background: rgba(0,0,0,0.8); }
+        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .modal-img { background: var(--gray-200); display: flex; align-items: center; justify-content: center; font-size: 8rem; min-height: 350px; border-radius: var(--radius-lg) 0 0 0; overflow: hidden; }
+        .modal-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg) 0 0 0; }
+        .modal-info { padding: 30px 30px 30px 0; }
+        .modal-info h2 { font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 10px; }
+        .modal-price { font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 20px; }
+        .modal-variasi { margin-bottom: 20px; }
+        .modal-variasi h4 { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 10px; }
+        .variasi-options { display: flex; gap: 10px; flex-wrap: wrap; }
+        .variasi-btn { padding: 10px 20px; border: 2px solid var(--gray-300); border-radius: 50px; background: white; cursor: pointer; font-weight: 500; font-size: 0.9rem; transition: var(--transition); }
+        .variasi-btn:hover, .variasi-btn.selected { background: var(--primary); color: white; border-color: var(--primary); }
+        .modal-description { border-top: 1px solid var(--gray-200); padding: 30px; }
+        .modal-description h3 { color: var(--primary-dark); margin-bottom: 15px; font-size: 1.3rem; }
+        .modal-description h4 { color: var(--primary-dark); margin-top: 20px; margin-bottom: 10px; }
+        .modal-description p { color: var(--text-light); line-height: 1.8; margin-bottom: 10px; }
+        .modal-description ul { list-style: none; padding: 0; }
+        .modal-description ul li { padding: 8px 0; color: var(--text-light); display: flex; align-items: flex-start; gap: 10px; }
+        .modal-description ul li i { color: var(--primary); margin-top: 4px; flex-shrink: 0; }
+        .syarat-list { display: flex; flex-direction: column; gap: 12px; }
+        .syarat-item { background: var(--bg-light); border-radius: var(--radius-md); padding: 15px 18px; border-left: 3px solid var(--accent); }
+        .syarat-item strong { display: block; color: var(--primary-dark); margin-bottom: 4px; font-size: 0.9rem; }
+        .syarat-item span { color: var(--text-light); font-size: 0.85rem; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .portfolio-card { border-radius: var(--radius-lg); overflow: hidden; background: white; box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid var(--gray-200); }
+        .portfolio-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .portfolio-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .portfolio-body { padding: 22px; }
+        .portfolio-body h4 { color: var(--primary-dark); margin-bottom: 5px; }
+        .portfolio-body p { color: var(--text-light); font-size: 0.9rem; }
+        .portfolio-body .date { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+        .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .term-card { background: white; border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-sm); border-left: 4px solid var(--primary); transition: var(--transition); }
+        .term-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        .term-card h4 { font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark); display: flex; align-items: center; gap: 10px; }
+        .term-card h4 i { color: var(--accent); }
+        .term-card p { color: var(--text-light); font-size: 0.9rem; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .contact-info { display: flex; flex-direction: column; gap: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 15px; padding: 18px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: var(--transition); }
+        .contact-item:hover { box-shadow: var(--shadow-md); }
+        .contact-item i { font-size: 1.3rem; color: var(--accent); width: 50px; height: 50px; background: rgba(230,126,34,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .contact-item strong { display: block; color: var(--primary-dark); }
+        a.contact-item-link { text-decoration: none; color: inherit; display: block; }
+        a.contact-item-link .contact-item { cursor: pointer; }
+        a.contact-item-link:hover .contact-item { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .contact-form { background: white; padding: 35px; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+        .contact-form h3 { margin-bottom: 20px; color: var(--primary-dark); }
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px 18px; border: 2px solid var(--gray-200); border-radius: var(--radius-md); font-size: 0.95rem; transition: var(--transition); font-family: inherit; background: #fafafa; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45,90,39,0.06); background: white; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        footer { background: #111111; color: rgba(255,255,255,0.7); padding: 50px 30px 20px; }
+        .footer-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .footer-col h4 { color: white; margin-bottom: 15px; font-size: 1.1rem; }
+        .footer-col a { color: rgba(255,255,255,0.6); text-decoration: none; display: block; margin-bottom: 8px; transition: var(--transition); font-size: 0.9rem; }
+        .footer-col a:hover { color: white; }
+        .footer-col .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+        .footer-col .social-icons a { color: rgba(255,255,255,0.7); font-size: 1.3rem; }
+        .footer-bottom { max-width: 1300px; margin: 0 auto; text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+        .bg-light { background: var(--bg-light); }
+        .bg-cream { background: var(--bg-cream); }
+        @media (max-width: 968px) {
+            .nav-menu { position: fixed; top: 75px; left: -100%; width: 100%; height: calc(100vh - 75px); background: #111111; flex-direction: column; padding: 30px; transition: var(--transition); gap: 8px; overflow-y: auto; z-index: 999; }
+            .nav-menu.active { left: 0; }
+            .hamburger { display: flex; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-img { width: 280px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            section { padding: 50px 20px; }
+            .whatsapp-float { bottom: 20px; right: 20px; }
+            .whatsapp-float .wa-button { width: 55px; height: 55px; font-size: 1.7rem; }
+            .kategori-filter { gap: 8px; }
+            .kategori-btn { padding: 10px 16px; font-size: 0.8rem; }
+            .modal-grid { grid-template-columns: 1fr; }
+            .modal-img { border-radius: var(--radius-lg) var(--radius-lg) 0 0; min-height: 250px; font-size: 5rem; }
+            .modal-info { padding: 20px; }
+            .modal-description { padding: 20px; }
+        }
+        .portfolio-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo" onclick="navigateTo('dashboard')"><i class="fas fa-mountain"></i> MAITARA</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" onclick="navigateTo('dashboard')" class="nav-link active" data-page="dashboard"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="#" onclick="navigateTo('sewa')" class="nav-link" data-page="sewa"><i class="fas fa-box-open"></i> Kami Menyewakan</a></li>
+                <li><a href="#" onclick="navigateTo('jual')" class="nav-link" data-page="jual"><i class="fas fa-shopping-bag"></i> Produk Kami</a></li>
+                <li><a href="#" onclick="navigateTo('portfolio')" class="nav-link" data-page="portfolio"><i class="fas fa-calendar-check"></i> Event Kami</a></li>
+                <li><a href="#" onclick="navigateTo('syarat')" class="nav-link" data-page="syarat"><i class="fas fa-file-contract"></i> Syarat & Ketentuan</a></li>
+                <li><a href="#" onclick="navigateTo('kontak')" class="nav-link" data-page="kontak"><i class="fas fa-envelope"></i> Kontak Kami</a></li>
+                <li><a href="#" onclick="navigateTo('kontak')" class="nav-cta"><i class="fas fa-calendar-check"></i> Booking Now</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="whatsapp-float">
+        <span class="wa-tooltip">Chat kami via WhatsApp</span>
+        <a href="https://wa.me/6285792896303?text=Halo%20kak%2C%20aku%20tau%20dari%20website%20maitara.%20Mau%20tau%20informasi%20penjualan%20dan%20penyewaan%20dong%20kak%2C%20boleh%20minta%20infonya%3F" target="_blank" class="wa-button" title="Chat via WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-grid">
+                <div class="modal-img" id="modalImg"><img src="placeholder.webp" alt="Produk" style="width:100%;height:100%;object-fit:cover;"></div>
+                <div class="modal-info">
+                    <h2 id="modalTitle">Nama Produk</h2>
+                    <div class="modal-price" id="modalPrice">Rp 0</div>
+                    <div class="modal-variasi" id="modalVariasiContainer" style="display:none;">
+                        <h4>Pilih Variasi:</h4>
+                        <div class="variasi-options" id="modalVariasi"></div>
+                    </div>
+                    <button class="btn btn-wa" style="width:100%;justify-content:center;" id="modalWaBtn"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</button>
+                </div>
+            </div>
+            <div class="modal-description" id="modalDesc"><h3>Deskripsi Produk</h3><p>Deskripsi lengkap produk akan muncul di sini.</p></div>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <!-- DASHBOARD -->
+        <div class="page active" id="page-dashboard">
+            <section class="dashboard-hero">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <h1>Petualangan Tak Terlupakan Dimulai <span>Di Sini...</span></h1>
+                        <p>Maitara Official Adalah Platform untuk sewa dan beli perlengkapan camping outdoor berkualitas.</p>
+                        <p>Siap menemani setiap langkah petualangan Anda dengan peralatan terbaik!</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-sewa" onclick="navigateTo('sewa')"><i class="fas fa-box-open"></i> Sewa Alat Murah Disini</button>
+                            <button class="btn btn-jual" onclick="navigateTo('jual')"><i class="fas fa-shopping-cart"></i> Jual Alat Disini</button>
+                            <a href="https://shopee.co.id/maitaraofficial?entryPoint=ShopBySearch&searchKeyword=maitara" target="_blank" class="btn btn-shopee"><i class="fas fa-shopping-cart"></i> Toko Shopee Kami</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item"><div class="stat-number">100+</div><div class="stat-label">Alat Sewa Tersedia</div></div>
+                            <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">Barang Penjualan Tersedia</div></div>
+                            <div class="stat-item"><div class="stat-number">4.8+</div><div class="stat-label">Rating Pelanggan Dishopee</div></div>
+                        </div>
+                    </div>
+                    <div class="hero-image"><div class="hero-image-card"><img src="logo.webp" alt="Camping Outdoor" class="hero-img"></div></div>
+                </div>
+            </section>
+            <section class="bg-light">
+                <div class="section-container">
+                    <div class="section-header"><span class="section-badge">Layanan Kami</span><h2 class="section-title">Solusi Lengkap Camping Anda</h2><p class="section-subtitle">Kami menyediakan berbagai layanan premium untuk memenuhi kebutuhan outdoor Anda</p></div>
+                    <div class="services-grid">
+                        <div class="service-card"><div class="service-icon"><i class="fas fa-box-open"></i></div><h3>Sewa Alat Camping</h3><p>Tenda, sleeping bag, matras, kompor, dan perlengkapan lainnya dengan kualitas terbaik.</p></div>
+                        <div class="service-card"><div class="service-icon"><i class="fas fa-shopping-bag"></i></div><h3>Jual Peralatan Baru</h3><p>Beli peralatan camping original dari brand ternama dengan garansi resmi.</p></div>
+                        <div class="service-card"><div class="service-icon"><i class="fas fa-calendar-check"></i></div><h3>Event Outdoor</h3><p>Dukungan perlengkapan untuk event camping, hiking, dan kegiatan outdoor lainnya.</p></div>
+                        <div class="service-card"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><h3>Jaminan Kualitas</h3><p>Semua alat terawat, bersih, dan siap pakai dengan standar keamanan tinggi.</p></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- SEWA -->
+        <div class="page" id="page-sewa">
+            <section style="padding-top:90px;">
+                <div class="section-container">
+                    <div class="section-header"><h2 class="section-title">Peralatan Camping untuk Disewa</h2><p class="section-subtitle">Pilih perlengkapan yang Anda butuhkan dengan harga sewa terjangkau</p></div>
+                    <div class="kategori-filter" id="kategoriSewa">
+                        <button class="kategori-btn active" data-kategori="semua"><i class="fas fa-grid-2"></i> Semua</button>
+                        <button class="kategori-btn" data-kategori="tenda"><i class="fas fa-campground"></i> Tenda</button>
+                        <button class="kategori-btn" data-kategori="sleeping"><i class="fas fa-bed"></i> Sleeping Gear</button>
+                        <button class="kategori-btn" data-kategori="memasak"><i class="fas fa-fire-burner"></i> Memasak</button>
+                        <button class="kategori-btn" data-kategori="furniture"><i class="fas fa-chair"></i> Furniture</button>
+                        <button class="kategori-btn" data-kategori="elektronik"><i class="fas fa-bolt"></i> Elektronik</button>
+                        <button class="kategori-btn" data-kategori="aksesoris"><i class="fas fa-gear"></i> Aksesoris</button>
+                    </div>
+                    <div class="catalog-grid" id="sewaCatalog">
+                        <!-- GANTI NAMA FILE GAMBAR DI src dan parameter ke-4 onclick -->
+                        <div class="catalog-card sewa-item" data-kategori="tenda" onclick="openSewaDetail('Tenda Dome 4 Orang','Rp 75.000/hari','tenda2.avif','Tenda dome kapasitas 4 orang dengan double layer waterproof 3000mm. Cocok untuk keluarga atau grup kecil. Mudah dipasang dan dilengkapi dengan tas bawaan.')"><div class="catalog-card-img"><img src="tenda.jpg" alt="Tenda Dome 4"><span class="catalog-card-badge">Best Seller</span></div><div class="catalog-card-body"><h4>Tenda Dome 4 Orang</h4><p class="desc">Double layer, waterproof 3000mm</p><p class="catalog-price">Rp 75.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="tenda" onclick="openSewaDetail('Tenda Dome 2 Orang','Rp 50.000/hari','tendaa2.avif','Tenda dome ringan kapasitas 2 orang. Cocok untuk backpacker dan pendaki solo. Material ripstop nylon yang tahan lama dan mudah dibawa.')"><div class="catalog-card-img"><img src="tendaa.avif" alt="Tenda Dome 2"></div><div class="catalog-card-body"><h4>Tenda Dome 2 Orang</h4><p class="desc">Ringan, mudah dipasang</p><p class="catalog-price">Rp 50.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="tenda" onclick="openSewaDetail('Tenda Besar 8-10 Orang','Rp 150.000/hari','tendab.jpg','Tenda besar untuk rombongan atau acara gathering. Kapasitas 8-10 orang dengan tinggi berdiri. Dilengkapi sekat ruangan dan ventilasi udara.')"><div class="catalog-card-img"><img src="tendab2.avif" alt="Tenda Besar"></div><div class="catalog-card-body"><h4>Tenda Besar 8-10 Orang</h4><p class="desc">Cocok gathering & camping</p><p class="catalog-price">Rp 150.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="sleeping" onclick="openSewaDetail('Sleeping Bag Premium','Rp 35.000/hari','sb2.jpg','Sleeping bag dengan comfort rating -5°C. Material anti air dan hangat. Cocok untuk camping di dataran tinggi. Include kompresi bag.')"><div class="catalog-card-img"><img src="sb.jpg" alt="Sleeping Bag"></div><div class="catalog-card-body"><h4>Sleeping Bag Premium</h4><p class="desc">-5°C comfort rating</p><p class="catalog-price">Rp 35.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="sleeping" onclick="openSewaDetail('Matras Gulung Foam','Rp 20.000/hari','mg2.jpg','Matras gulung dari bahan foam tebal 1cm. Nyaman digunakan sebagai alas tidur. Ringan dan mudah dibawa.')"><div class="catalog-card-img"><img src="mg.jpg" alt="Matras Foam"></div><div class="catalog-card-body"><h4>Matras Gulung Foam</h4><p class="desc">Tebal 1cm, nyaman</p><p class="catalog-price">Rp 20.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="sleeping" onclick="openSewaDetail('Matras Angin Single','Rp 30.000/hari','ma2.avif','Matras angin single dengan pompa included. Praktis dibawa dan nyaman digunakan. Material PVC berkualitas.')"><div class="catalog-card-img"><img src="ma.avif" alt="Matras Angin"></div><div class="catalog-card-body"><h4>Matras Angin Single</h4><p class="desc">Include pompa</p><p class="catalog-price">Rp 30.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="memasak" onclick="openSewaDetail('Kompor Portable','Rp 15.000-30.000/hari','kompor2.png','Kompor portable dengan gas cartridge. Cocok untuk memasak di alam terbuka. Api stabil dan mudah digunakan.')"><div class="catalog-card-img"><img src="kompor.webp" alt="Kompor"></div><div class="catalog-card-body"><h4>Kompor Portable</h4><p class="desc">Include gas cartridge</p><p class="catalog-price">Rp 15.000-30.000/hari<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="memasak" onclick="openSewaDetail('Nesting Set Cooking','Rp 20.000/hari','nesting.jpg','Set peralatan masak nesting: panci, wajan, piring, dan gelas stainless steel. Ringkas dan mudah dibersihkan.')"><div class="catalog-card-img"><img src="nesting2.jpg" alt="Nesting Set"></div><div class="catalog-card-body"><h4>Nesting Set Cooking</h4><p class="desc">Panci, wajan, piring</p><p class="catalog-price">Rp 20.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="furniture" onclick="openSewaDetail('Kursi Lipat Outdoor','Rp 20.000/hari','kurlip2.webp','Kursi lipat outdoor berbahan aluminium ringan. Sandaran tinggi dan nyaman untuk bersantai.')"><div class="catalog-card-img"><img src="kurlip.jpg" alt="Kursi Lipat"></div><div class="catalog-card-body"><h4>Kursi Lipat Outdoor</h4><p class="desc">Aluminum, lightweight</p><p class="catalog-price">Rp 20.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="furniture" onclick="openSewaDetail('Meja Lipat Portable','Rp 30.000/hari','meli2.png','Meja lipat portable ukuran 120x60cm. Bahan aluminium kuat dan ringan. Cocok untuk alas makan atau kerja.')"><div class="catalog-card-img"><img src="meli.jpg" alt="Meja Lipat"></div><div class="catalog-card-body"><h4>Meja Lipat Portable</h4><p class="desc">120x60cm, aluminium</p><p class="catalog-price">Rp 30.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="furniture" onclick="openSewaDetail('Hammock Parasut','Rp 15.000/hari','hm2.avif','Hammock dari bahan parasut kuat. Max beban 150kg. Include tali webbing. Nyaman untuk tidur santai di alam.')"><div class="catalog-card-img"><img src="hm.webp" alt="Hammock"></div><div class="catalog-card-body"><h4>Hammock Parasut</h4><p class="desc">Max 150kg</p><p class="catalog-price">Rp 15.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="elektronik" onclick="openSewaDetail('Lampu Camping LED','Rp 15.000/hari','lc2.avif','Lampu camping LED rechargeable 2000 lumen. Tahan air dan memiliki 3 mode cahaya. Cocok untuk penerangan tenda.')"><div class="catalog-card-img"><img src="lc.avif" alt="Lampu LED"></div><div class="catalog-card-body"><h4>Lampu Camping LED</h4><p class="desc">Rechargeable, 2000 lumen</p><p class="catalog-price">Rp 15.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="elektronik" onclick="openSewaDetail('Powerbank 8.000 mAh','Rp 15.000/hari','pb2.avif','Powerbank kapasitas 8.000 mAh dengan fast charging. Include kabel charger. Dapat mengisi smartphone hingga 4-5 kali.')"><div class="catalog-card-img"><img src="pb.avif" alt="Powerbank"></div><div class="catalog-card-body"><h4>Powerbank 8.000 mAh</h4><p class="desc">Fast charging</p><p class="catalog-price">Rp 15.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="aksesoris" onclick="openSewaDetail('Cooler Box 30L','Rp 30.000/hari','cl2.png','Cooler box kapasitas 30 liter. Tahan dingin hingga 48 jam. Cocok untuk menyimpan makanan dan minuman segar.')"><div class="catalog-card-img"><img src="cl.png" alt="Cooler Box"></div><div class="catalog-card-body"><h4>Cooler Box 30L</h4><p class="desc">Tahan dingin 48 jam</p><p class="catalog-price">Rp 30.000<small>/hari</small></p></div></div>
+                        <div class="catalog-card sewa-item" data-kategori="aksesoris" onclick="openSewaDetail('Tripod Kamera','Rp 10.000/hari','tr2.avif','Tripod kamera ringan dengan tinggi maksimal 150cm. Cocok untuk foto grup atau long exposure. Universal mount.')"><div class="catalog-card-img"><img src="tr.webp" alt="Tripod"></div><div class="catalog-card-body"><h4>Tripod Kamera</h4><p class="desc">Ringan, max 150cm</p><p class="catalog-price">Rp 10.000<small>/hari</small></p></div></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- JUAL -->
+        <div class="page" id="page-jual">
+            <section style="padding-top:90px;">
+                <div class="section-container">
+                    <div class="section-header"><span class="section-badge">KAMI MENJUAL</span><h2 class="section-title">Peralatan Camping untuk Dibeli</h2><p class="section-subtitle">Investasi perlengkapan berkualitas untuk petualangan jangka panjang</p></div>
+                    <div class="kategori-filter" id="kategoriJual">
+                        <button class="kategori-btn active" data-kategori="semua"></i> Semua</button>
+                        <button class="kategori-btn" data-kategori="tas"></i> Tas</button>
+                        <button class="kategori-btn" data-kategori="elektronik"></i> Celana</button>
+                        <button class="kategori-btn" data-kategori="pakaian"></i> Pakaian Olahraga Pria</button>
+                        <button class="kategori-btn" data-kategori="alat"></i> Kaos Kaki</button>
+                        <button class="kategori-btn" data-kategori="sepatu"></i> Pakaian Olahraga Wanita</button>
+                        <button class="kategori-btn" data-kategori="lainnya"></i> Lainnya</button>
+                    </div>
+                    <div class="catalog-grid" id="jualCatalog">
+                        <!-- GANTI NAMA FILE GAMBAR di src dan parameter ke-4 onclick -->
+                        <div class="catalog-card jual-item" data-kategori="tas" onclick="openProductDetail('Tas Hydropack 12L','Rp190.000','hydropack2.webp',['Warna: Hitam','Warna: Navy'],'The backpack features a 12L capacity, webbing and buckle closures on both the chest and sides, double mesh construction, a front pocket with stretch mesh, a shoulder pocket with stretch mesh, adjustable chest size, trekking pole loops, a hole for a water bladder, and a chest pocket with a zipper.',['WaterRepellent Materials','210D Nylon Composite Fabrics','Elastic Mesh','Nylon Webbing','Nifco Buckle'])"><div class="catalog-card-img"><img src="hydropack.webp" alt="Hydropack"><span class="catalog-card-badge green">New</span></div><div class="catalog-card-body"><h4>Tas Hydropack 12L</h4><p class="desc">TYPE : RUNNING PACKS, 12L Capacity</p><p class="catalog-price">Rp 190.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="tas" onclick="openProductDetail('Running Belt','Rp75.000','runbag.webp',['Size: L','Size: XL'],'Miles of Rebellion is about running against limits--both the ones around you and the ones within. It’s not just about speed, but about turning every step into a rebellion against the constraints of routine.',['60% Nylon Thread','40% Spandex Nylon','Water Repellent'])"><div class="catalog-card-img"><img src="runbag2.webp" alt="Daypack"></div><div class="catalog-card-body"><h4>Running Belt</h4><p class="desc">Paling Cocok Untuk Running</p><p class="catalog-price">Rp 190.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="elektronik" onclick="openProductDetail('Celana Outdoor Pendek Pria Wanita','Rp150.000','celana2.webp',['Sizw: L','Size: XL'],'Celana outdoor pendek Maitara Guntur Series ini dirancang untuk memberikan kenyamanan, perlindungan, dan fungsionalitas saat menjalani aktivitas outdoor di lingkungan anda. Celana ini didesain trendy dan bisa digunakan untuk bersantai, dan aktivitas apapun.',['Bahan quickdry, semi strech','ringan yang cocok digunakan saat traveling ataupun kegiatan luar ruang.','Bagian pinggang dilengkapi dengan Karet untuk menambah kenyamanan','Original Produk','Bisa Tukar Size, ongkir bolak balik ditanggung pembeli'])"><div class="catalog-card-img"><img src="celana.webp" alt="Headlamp"></div><div class="catalog-card-body"><h4>Celana Outdoor Pendek</h4><p class="desc">Celana Outdoor anti air</p><p class="catalog-price">Rp 150.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="pakaian" onclick="openProductDetail('Kaos Dry fit Lari','Rp90.000','kaos2.webp',['Ukuran: M','Ukuran: L','Ukuran: XL'],'Baju Polyester menggunakan bahan berkualitas tinggi, baju ini memberikan kenyamanan yang memiliki sifat tahan lama, sehingga baju ini akan tetap terlihat bagus bahkan setelah banyak pemakaian.',['Quick Dry: Baju ini dapat mengeringkan keringat dengan cepat', 'Light Weight: Dengan bahan polyester yang ringan, baju ini memberikan kenyamanan saat digunakan.',' Anti Wrinkle: Sifat anti wrinkle yang membuatnya bebas dari kerutan.','Anda dapat beraktivitas sepanjang hari tanpa khawatir harus menyeterika pakaian berulang kali.'])"><div class="catalog-card-img"><img src="kaos.webp" alt="Jaket"></div><div class="catalog-card-body"><h4> Kaos Olahraga Dry fit Running</h4><p class="desc">Kaos Paling Cocok Untuk Running</p><p class="catalog-price">Rp 90.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="pakaian" onclick="openProductDetail('Kaos Dry fit Running Gym Pria Long Sleeve','Rp99.000','kaoss2.webp',['Ukuran: M','Ukuran: L','Ukuran: XL'],'Baju Polyester menggunakan bahan berkualitas tinggi, baju ini memberikan kenyamanan yang memiliki sifat tahan lama, sehingga baju ini akan tetap terlihat bagus bahkan setelah banyak pemakaian.',['Quick Dry: Baju ini dapat mengeringkan keringat dengan cepat', 'Light Weight: Dengan bahan polyester yang ringan, baju ini memberikan kenyamanan saat digunakan.',' Anti Wrinkle: Sifat anti wrinkle yang membuatnya bebas dari kerutan.','Anda dapat beraktivitas sepanjang hari tanpa khawatir harus menyeterika pakaian berulang kali.'])"><div class="catalog-card-img"><img src="kaoss.webp" alt="Celana"></div><div class="catalog-card-body"><h4>Kaos Dry fit Running Gym Pria Long Sleeve</h4><p class="desc">Kaos Lengan Panjang Antigerah Untuk Running</p><p class="catalog-price">Rp 99.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="alat" onclick="openProductDetail('Kaos Kaki Sport Stylis 1.2 Pendek Pria Wanita','Rp15.000','kaoskaki2.webp',['Warna: Hitam'],'Kaos kaki sport pendek pria dan wanita dari Maitara dengan motif tebal untuk olahraga running dan lari, berbahan katun, nylon, dan spandex, cocok digunakan untuk kegiatan sehari-hari.',['Warna yang tersedia adalah Black Grey, Black Green, White, Grey, Blue, dan Orange.'])"><div class="catalog-card-img"><img src="kaoskaki.webp" alt="Multitool"></div><div class="catalog-card-body"><h4>Kaos Kaki Sport Pendek Motif Tebal Running</h4><p class="desc">Kaos Kaki Anti Lembab Untuk Running</p><p class="catalog-price">Rp 15.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="sepatu" onclick="openProductDetail('Jaket Anti UV Outdoor Wanita','Rp150.000','women2.webp',['Ukuran: M','Ukuran: L','Ukuran: XL'],'Jaket Anti UV ini dirancang untuk membantu melindungi kulit dari paparan sinar matahari sekaligus tetap nyaman dipakai sepanjang hari.',['UV protection membantu mengurangi paparan sinar matahari saat aktivitas outdoor, bahan ringan & adem nyaman dipakai lama tanpa terasa berat, breathable fabric menjaga sirkulasi udara tetap lancar sehingga tidak gerah, quick dry material cepat kering saat berkeringat, windproof membantu menahan angin saat aktivitas luar ruangan, dan model unisex cocok untuk pria maupun wanita'])"><div class="catalog-card-img"><img src="women.webp" alt="Sepatu"></div><div class="catalog-card-body"><h4>Jaket Anti UV Outdoor</h4><p class="desc"> Ringan Adem UV Protection untuk Olahraga</p><p class="catalog-price">Rp 150.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="lainnya" onclick="openProductDetail('Water Bags Water Bladder','Rp65.000','water2.webp',['Warna: Biru'],'Kantung air atau water bladder berfungsi untuk menyimpan air minum saat sedang beraktifitas, sehingga tidak perlu berhenti hanya untuk minum.',['Kapasitas 2 liter air netral, ukuran kantung 39 cm x 17,5 cm, panjang selang +/- 100 cm, dan material PEVA foodgrade dengan warna biru solid.'])"><div class="catalog-card-img"><img src="water.webp" alt="Purifier"></div><div class="catalog-card-body"><h4>Kantong Air 2 Liter Outdoor Water Bags</h4><p class="desc">untuk menyimpan air minum saat sedang beraktifitas</p><p class="catalog-price">Rp 65.000</p></div></div>
+                        <div class="catalog-card jual-item" data-kategori="lainnya" onclick="openProductDetail('IKAT PINGGANG PRIA RINGAN PLASTIK','Rp50.000','gesper2.webp',['Warna: Hitam','Warna: Gold'],'Pusing pakai gesper yang berat di pinggang dan harus buka gesper tiga kali selama di bandara? Ini solusinya karena gesper kami terbuat dari plastik dan pastinya ringan',['Tidak mudah terkelupas, lentur dan melekat erat di pinggang sehingga nyaman dipakai, serta grip tidak gampang kendur.'])"><div class="catalog-card-img"><img src="gesper.webp" alt="Trekking Pole"></div><div class="catalog-card-body"><h4>IKAT PINGGANG PRIA PLASTIK</h4><p class="desc">RINGAN PLASTIK ANTI X RAY XRAY BANDARA</p><p class="catalog-price">Rp 50.000</p></div></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+<!-- PORTFOLIO -->
+<div class="page" id="page-portfolio">
+    <section style="padding-top:90px;">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Event yang Telah Kami Dukung</h2>
+                <p class="section-subtitle">Kepercayaan dari berbagai komunitas dan event organizer</p>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Event 1 - Pendakian Gunung Rinjani -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="air.jpg" alt="Pendakian Gunung Rinjani" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="portfolio-body">
+                        <h4>Rafting</h4>
+                        <p>Kegiatan rafting ini merupakan aktivitas wisata petualangan yang bertujuan meningkatkan kerja sama tim, keberanian, dan kebersamaan peserta.</p>
+                        <span class="date">📅 Januari 2026</span>
+                    </div>
+                </div>
+                
+                <!-- Event 2 - Family Camping Ground -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="ou.jpg" alt="Family Camping Ground" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="portfolio-body">
+                        <h4>Outdoor Camping Ground</h4>
+                        <p>Momen ini menjadi salah satu sesi penting dalam kegiatan team building, di mana setiap individu diajak untuk saling mengenal, membangun komunikasi yang efektif, serta memperkuat rasa percaya dan solidaritas antar anggota tim.</p>
+                        <span class="date">📅 Maret 2026</span>
+                    </div>
+                </div>
+                
+                <!-- Event 3 - Outbound Corporate -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="jeep.jpg" alt="Outbound Corporate" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="portfolio-body">
+                        <h4>Offroad Adventure</h4>
+                        <p>Kegiatan offroad adventure ini merupakan salah satu aktivitas wisata petualangan yang dirancang untuk memberikan pengalaman seru, menantang, dan penuh adrenalin bagi para peserta.</p>
+                        <span class="date">📅 April 2026</span>
+                    </div>
+                </div>
+                
+                <!-- Event 4 - Ekspedisi Gunung Semeru -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="pain.jpg" alt="Ekspedisi Gunung Semeru" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="portfolio-body">
+                        <h4>Paintball Battle</h4>
+                        <p>Kegiatan paintball battle ini merupakan salah satu aktivitas hiburan yang dirancang untuk memberikan pengalaman seru, menantang, dan penuh adrenalin bagi para peserta.</p>
+                        <span class="date">📅 Juni 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+        <!-- SYARAT -->
+        <div class="page" id="page-syarat">
+            <section style="padding-top:90px;background:var(--bg-cream);min-height:100vh;"><div class="section-container"><div class="section-header"><h2 class="section-title">Syarat & Ketentuan Sewa & Pembelian</h2><p class="section-subtitle">Mohon baca dengan teliti sebelum melakukan pemesanan</p></div><div class="terms-grid"><div class="term-card"><h4><i class="fas fa-id-card"></i> Identitas Diri</h4><p>Wajib menyerahkan fotokopi KTP/SIM dan mengisi form peminjaman. Berlaku untuk semua transaksi sewa.</p></div><div class="term-card"><h4><i class="fas fa-money-bill-wave"></i> Deposit & Pembayaran</h4><p>Deposit 50% untuk booking sewa. Pelunasan maksimal H-1 sebelum pengambilan. Pembelian langsung lunas.</p></div><div class="term-card"><h4><i class="fas fa-clock"></i> Durasi & Keterlambatan</h4><p>Sewa per 24 jam. Keterlambatan dikenakan biaya tambahan 20% per hari dari harga sewa normal.</p></div><div class="term-card"><h4><i class="fas fa-tools"></i> Kerusakan & Kehilangan</h4><p>Penyewa bertanggung jawab atas kerusakan/kehilangan. Biaya perbaikan atau penggantian sesuai harga pasar.</p></div><div class="term-card"><h4><i class="fas fa-undo"></i> Pembatalan</h4><p>Pembatalan H-3: refund 80%. H-2: refund 50%. H-1 atau hari H: deposit hangus. Reschedule gratis maks H-5.</p></div><div class="term-card"><h4><i class="fas fa-check-circle"></i> Garansi Pembelian</h4><p>Garansi resmi 7 hari untuk produk pembelian. Bisa ditukar jika ada cacat pabrik dengan syarat tertentu.</p></div></div></div></section>
+        </div>
+
+        <!-- KONTAK -->
+        <div class="page" id="page-kontak">
+            <section style="padding-top:90px;"><div class="section-container"><div class="section-header"><h2 class="section-title">Hubungi Maitara</h2><p class="section-subtitle">Konsultasi gratis untuk kebutuhan camping Anda</p></div><div class="contact-grid"><div class="contact-info"><a href="https://maps.app.goo.gl/WcPPr4KwgUg2Xt6f8?g_st=ic" target="_blank" class="contact-item-link"><div class="contact-item"><i class="fas fa-map-marker-alt"></i><div><strong>Alamat</strong>Jl.M.Nasir RT.04/08 Cilodong Depok Jawa Barat</div></div></a><a href="tel:+6285792896303" class="contact-item-link"><div class="contact-item"><i class="fas fa-phone"></i><div><strong>Telepon</strong>+62 857-9289-6303</div></div></a><a href="https://wa.me/6285792896303?text=Halo%20kak%2C%20aku%20tau%20dari%20website%20maitara.%20Mau%20tau%20informasi%20penjualan%20dan%20penyewaan%20dong%20kak%2C%20boleh%20minta%20infonya%3F" target="_blank" class="contact-item-link"><div class="contact-item"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong>+62 857-9289-6303</div></div></a><a href="mailto:maitaraofficial@gmail.com" class="contact-item-link"><div class="contact-item"><i class="fas fa-envelope"></i><div><strong>Email</strong>maitaraofficial@gmail.com</div></div></a><div class="contact-item"><i class="fas fa-clock"></i><div><strong>Jam Operasional</strong>Senin - Jumat: 09:00 - 17:00<br>Sabtu: 10:00 - 15:00<br>Minggu / Libur Nasional: Tutup</div></div></div><div class="contact-form"><h3>Kirim Pesan via WhatsApp</h3><div class="form-group"><input type="text" id="nama" placeholder="Nama Lengkap"></div><div class="form-group"><input type="email" id="email" placeholder="Email"></div><div class="form-group"><input type="tel" id="telepon" placeholder="Nomor Telepon"></div><div class="form-group"><select id="layanan"><option value="">Pilih Layanan</option><option>Sewa Alat</option><option>Beli Alat</option><option>Event Support</option><option>Lainnya</option></select></div><div class="form-group"><textarea id="pesan" rows="4" placeholder="Pesan Anda..."></textarea></div><button class="btn btn-wa" style="width:100%;justify-content:center;" id="submitContact"><i class="fab fa-whatsapp"></i> Kirim via WhatsApp</button></div></div></div></section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h4>▲ MAITARA</h4><p>Platform premium sewa dan jual perlengkapan camping outdoor terpercaya di Indonesia.</p><div class="social-icons"><a href="https://www.instagram.com/maitara.official?igsh=MXJjd2Q1M3lqOG1icg==" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://vt.tiktok.com/ZSQQPxBaQ/?page=Mall" target="_blank"><i class="fab fa-tiktok"></i></a><a href="https://shopee.co.id/maitaraofficial?entryPoint=ShopBySearch&searchKeyword=maitara" target="_blank"><i class="fas fa-shopping-cart"></i></a></div></div>
+            <div class="footer-col"><h4>Menu</h4><a href="#" onclick="navigateTo('dashboard')">Dashboard</a><a href="#" onclick="navigateTo('sewa')">Kami Menyewakan</a><a href="#" onclick="navigateTo('jual')">Produk Kami</a><a href="#" onclick="navigateTo('portfolio')">Event Kami</a></div>
+            <div class="footer-col"><h4>Informasi</h4><a href="#" onclick="navigateTo('syarat')">Syarat & Ketentuan</a><a href="#" onclick="navigateTo('kontak')">Kontak</a></div>
+            <div class="footer-col"><h4>Jam Operasional</h4><p>Senin - Jumat: 09:00 - 17:00</p><p>Sabtu : 10:00 - 15:00</p><p>Minggu / Libur Nasional: Tutup</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Maitara. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        const WA_NUMBER = '6285792896303';
+        const WA_PESAN_DEFAULT = 'Halo kak, aku tau dari website maitara. Mau tau informasi penjualan dan penyewaan dong kak, boleh minta infonya?';
+        document.querySelector('.whatsapp-float .wa-button').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_PESAN_DEFAULT)}`;
+
+        function navigateTo(pageName) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById('page-' + pageName);
+            if (targetPage) targetPage.classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(link => { link.classList.remove('active'); if (link.getAttribute('data-page') === pageName) link.classList.add('active'); });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('navMenu').classList.remove('active');
+        }
+
+        // MODAL JUAL - Parameter: nama, harga, NAMA_FILE_GAMBAR, variasi, deskripsi, specs...
+        function openProductDetail(title, price, imgFile, variasi, description, ...specs) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalPrice').textContent = price;
+            document.getElementById('modalImg').innerHTML = `<img src="${imgFile}" alt="${title}" style="width:100%;height:100%;object-fit:cover;border-radius:20px 0 0 0;">`;
+            document.getElementById('modalVariasiContainer').style.display = 'block';
+            let vHTML = ''; variasi.forEach((v, i) => { vHTML += `<button class="variasi-btn${i===0?' selected':''}" onclick="selectVariasi(this)">${v}</button>`; });
+            document.getElementById('modalVariasi').innerHTML = vHTML;
+            let dHTML = `<h3>Deskripsi Produk</h3><p>${description}</p><h4>Spesifikasi:</h4><ul>`;
+            specs.forEach(s => { dHTML += `<li><i class="fas fa-check-circle"></i> ${s}</li>`; });
+            dHTML += '</ul>';
+            document.getElementById('modalDesc').innerHTML = dHTML;
+            document.getElementById('modalWaBtn').onclick = function() {
+                const sv = document.querySelector('#modalVariasi .variasi-btn.selected');
+                window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Halo kak, aku tau dari website maitara. Mau tau informasi penjualan dan penyewaan dong kak, boleh minta infonya?\n\nSaya tertarik dengan produk:\n\nNama: ${title}\nHarga: ${price}\nVariasi: ${sv?sv.textContent:''}\n\nMohon info lebih lanjut kak.`)}`, '_blank');
+            };
+            document.getElementById('productModal').classList.add('active'); document.body.style.overflow = 'hidden';
+        }
+
+        // MODAL SEWA - Parameter: nama, harga, NAMA_FILE_GAMBAR, deskripsi
+        function openSewaDetail(title, price, imgFile, description) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalPrice').textContent = price;
+            document.getElementById('modalImg').innerHTML = `<img src="${imgFile}" alt="${title}" style="width:100%;height:100%;object-fit:cover;border-radius:20px 0 0 0;">`;
+            document.getElementById('modalVariasiContainer').style.display = 'none';
+            let dHTML = `<h3>Deskripsi Produk</h3><p>${description}</p><h4>Syarat & Ketentuan Sewa:</h4><div class="syarat-list">`;
+            dHTML += `<div class="syarat-item"><strong><i class="fas fa-id-card"></i> Identitas Diri</strong><span>Wajib menyerahkan fotokopi KTP/SIM dan mengisi form peminjaman.</span></div>`;
+            dHTML += `<div class="syarat-item"><strong><i class="fas fa-money-bill-wave"></i> Deposit & Pembayaran</strong><span>Deposit 50% untuk booking. Pelunasan maksimal H-1 sebelum pengambilan.</span></div>`;
+            dHTML += `<div class="syarat-item"><strong><i class="fas fa-clock"></i> Durasi & Keterlambatan</strong><span>Sewa per 24 jam. Keterlambatan dikenakan biaya tambahan 20% per hari.</span></div>`;
+            dHTML += `<div class="syarat-item"><strong><i class="fas fa-tools"></i> Kerusakan & Kehilangan</strong><span>Penyewa bertanggung jawab atas kerusakan/kehilangan alat.</span></div>`;
+            dHTML += `<div class="syarat-item"><strong><i class="fas fa-undo"></i> Pembatalan</strong><span>H-3 refund 80%, H-2 refund 50%, H-1 deposit hangus.</span></div>`;
+            dHTML += `</div>`;
+            document.getElementById('modalDesc').innerHTML = dHTML;
+            document.getElementById('modalWaBtn').onclick = function() {
+                window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Halo kak, aku tau dari website maitara. Mau tau informasi penjualan dan penyewaan dong kak, boleh minta infonya?\n\nSaya tertarik untuk sewa:\n\nNama: ${title}\nHarga: ${price}\n\nMohon info lebih lanjut kak.`)}`, '_blank');
+            };
+            document.getElementById('productModal').classList.add('active'); document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() { document.getElementById('productModal').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function selectVariasi(btn) { document.querySelectorAll('#modalVariasi .variasi-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); }
+        document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+        document.querySelectorAll('#kategoriSewa .kategori-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('#kategoriSewa .kategori-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); const kat = this.getAttribute('data-kategori'); document.querySelectorAll('#sewaCatalog .sewa-item').forEach(item => { item.style.display = (kat === 'semua' || item.getAttribute('data-kategori') === kat) ? 'block' : 'none'; }); }); });
+        document.querySelectorAll('#kategoriJual .kategori-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('#kategoriJual .kategori-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); const kat = this.getAttribute('data-kategori'); document.querySelectorAll('#jualCatalog .jual-item').forEach(item => { item.style.display = (kat === 'semua' || item.getAttribute('data-kategori') === kat) ? 'block' : 'none'; }); }); });
+
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+        document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('active'));
+        document.querySelectorAll('#navMenu a').forEach(link => link.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+
+        document.getElementById('submitContact').addEventListener('click', function(e) {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value.trim(); const email = document.getElementById('email').value.trim(); const telepon = document.getElementById('telepon').value.trim();
+            const layanan = document.getElementById('layanan').value; const pesan = document.getElementById('pesan').value.trim();
+            if (!nama || !telepon) { alert('⚠️ Mohon isi Nama dan Nomor Telepon terlebih dahulu.'); return; }
+            let waMessage = `Halo kak, aku tau dari website maitara. Mau tau informasi penjualan dan penyewaan dong kak, boleh minta infonya?\n\n*Data Diri:*\nNama: ${nama}\n${email ? 'Email: '+email+'\n' : ''}Telepon: ${telepon}\n${layanan ? 'Layanan: '+layanan+'\n' : ''}${pesan ? '\nPesan Tambahan: '+pesan : ''}`;
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`, '_blank');
+            ['nama','email','telepon','pesan'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('layanan').selectedIndex = 0;
+        });
+
+        window.addEventListener('popstate', (e) => { if (e.state?.page) navigateTo(e.state.page); });
+        const origNav = navigateTo;
+        navigateTo = function(p) { origNav(p); history.pushState({ page: p }, '', '#' + p); };
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('page-' + hash)) navigateTo(hash);
+    </script>
+</body>
+</html>
